@@ -1,4 +1,10 @@
-import { IsEmail, IsNotEmpty, IsString, Length, MaxLength } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  Length,
+  MaxLength,
+} from 'class-validator';
 import { UserInterface } from '../../users/interface/user.interface';
 
 export class RegisterUserDto implements UserInterface {
