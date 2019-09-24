@@ -21,9 +21,16 @@ export class AuthController {
   }
 
   @UseGuards(AuthGuard('jwt'))
+  @Get('logout')
+  async logOut(@Request() req) {
+    return this.authService.logout(req.user);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
   @Get('user')
   getUser(@Request() req) {
-    return req.user;
+    const { id, password, token, ...rest } = req.user;
+    return rest;
   }
 
   @Post('signup')
