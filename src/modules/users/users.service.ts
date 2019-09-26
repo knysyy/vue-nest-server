@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import User from './users.entity';
+import User from './entity/users.entity';
 import { Repository, UpdateResult } from 'typeorm';
 import { UserInterface } from './interface/user.interface';
 import * as uuid4 from 'uuid/v4';
@@ -12,13 +12,17 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-  ) {}
+  ) {
+  }
 
-  async logout(user: UserInterface): Promise<UpdateResult> {
-    return this.userRepository.update(
+  async logout(user: UserInterface): Promise<void> {
+    const result: UpdateResult = await this.userRepository.update(
       { email: user.email },
       { token: uuid4() },
     );
+    if (result.affected < 0) {
+      throw new BadRequestException();
+    }
   }
 
   async findByEmail(email: string): Promise<User | undefined> {
@@ -29,9 +33,13 @@ export class UsersService {
     return this.userRepository.findOne({ where: { token } });
   }
 
-  async register(user: UserInterface): Promise<User> {
-    const newUser = this.userRepository.create(user);
-    newUser.password = this.hashPassword(user.password);
+  async register(reqUser: UserInterface): Promise<User> {
+    const user = await this.findByEmail(reqUser.email);
+    if (user) {
+      throw new InternalServerErrorException();
+    }
+    const newUser = this.userRepository.create(reqUser);
+    newUser.password = this.hashPassword(reqUser.password);
     return this.userRepository.save(newUser);
   }
 

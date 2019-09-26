@@ -1,18 +1,13 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, ClassSerializerInterceptor, Controller, Get, HttpCode, Post, Request, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { RegisterUserDto } from './dto/register-user.dto';
+import { UserResponse } from '../users/response/user.response';
 
 @Controller('api/auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {
+  }
 
   @UseGuards(AuthGuard('local'))
   @Post('login')
@@ -22,19 +17,22 @@ export class AuthController {
 
   @UseGuards(AuthGuard('jwt'))
   @Get('logout')
-  async logOut(@Request() req) {
-    return this.authService.logout(req.user);
+  @HttpCode(202)
+  async logOut(@Request() req): Promise<void> {
+    await this.authService.logout(req.user);
   }
 
   @UseGuards(AuthGuard('jwt'))
+  @UseInterceptors(ClassSerializerInterceptor)
   @Get('user')
-  getUser(@Request() req) {
-    const { id, password, token, ...rest } = req.user;
-    return rest;
+  getUser(@Request() req): UserResponse {
+    return new UserResponse(req.user);
   }
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @Post('signup')
-  async signUp(@Body() userDto: RegisterUserDto) {
-    return this.authService.signUp(userDto);
+  async signUp(@Body() userDto: RegisterUserDto): Promise<UserResponse> {
+    const user = await this.authService.signUp(userDto);
+    return new UserResponse(user);
   }
 }
