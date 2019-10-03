@@ -27,6 +27,5 @@ import { ConfigModule } from './config/config.module';
   ],
 })
 export class AppModule {
-  constructor(private readonly connection: Connection) {
-  }
+  constructor(private readonly connection: Connection) {}
 }
