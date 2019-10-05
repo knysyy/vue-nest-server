@@ -4,8 +4,8 @@ import {
   IsString,
   Length,
   MaxLength,
-} from 'class-validator';
-import { UserInterface } from '../../users/interface/user.interface';
+} from "class-validator";
+import { UserInterface } from "../../users/interface/user.interface";
 
 export class RegisterUserDto implements UserInterface {
   @IsString()

@@ -2,14 +2,14 @@ import {
   BadRequestException,
   Injectable,
   InternalServerErrorException,
-} from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import User from './entity/users.entity';
-import { Repository, UpdateResult } from 'typeorm';
-import { UserInterface } from './interface/user.interface';
-import * as uuid4 from 'uuid/v4';
-import * as bcrypt from 'bcryptjs';
-import { encryptConstants } from '../../config/server.constatnts';
+} from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import User from "./entity/users.entity";
+import { Repository, UpdateResult } from "typeorm";
+import { UserInterface } from "./interface/user.interface";
+import * as uuid4 from "uuid/v4";
+import * as bcrypt from "bcryptjs";
+import { encryptConstants } from "../../config/server.constatnts";
 
 @Injectable()
 export class UsersService {

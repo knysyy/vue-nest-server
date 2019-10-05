@@ -1,12 +1,12 @@
-import { Module } from '@nestjs/common';
-import { Connection } from 'typeorm';
-import { AuthModule } from './modules/auth/auth.module';
-import { UsersModule } from './modules/users/users.module';
-import { MorganInterceptor, MorganModule } from 'nest-morgan';
-import { APP_INTERCEPTOR } from '@nestjs/core';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { TypeOrmConfig } from './config/typeorm.config';
-import { ConfigModule } from './config/config.module';
+import { Module } from "@nestjs/common";
+import { Connection } from "typeorm";
+import { AuthModule } from "./modules/auth/auth.module";
+import { UsersModule } from "./modules/users/users.module";
+import { MorganInterceptor, MorganModule } from "nest-morgan";
+import { APP_INTERCEPTOR } from "@nestjs/core";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { TypeOrmConfig } from "./config/typeorm.config";
+import { ConfigModule } from "./config/config.module";
 
 @Module({
   imports: [
@@ -22,7 +22,7 @@ import { ConfigModule } from './config/config.module';
   providers: [
     {
       provide: APP_INTERCEPTOR,
-      useClass: MorganInterceptor('combined'),
+      useClass: MorganInterceptor("combined"),
     },
   ],
 })

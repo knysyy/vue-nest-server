@@ -3,10 +3,10 @@ import {
   ExecutionContext,
   Injectable,
   NestInterceptor,
-} from '@nestjs/common';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Response as Res } from 'express';
+} from "@nestjs/common";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
+import { Response as Res } from "express";
 
 export interface Response<T> {
   code: number;
@@ -24,7 +24,7 @@ export class TransformInterceptor<T>
     const http = context.switchToHttp();
     const request = http.getResponse<Res>();
     const code = request.statusCode;
-    const status = request.statusMessage || 'success';
+    const status = request.statusMessage || "success";
     return next.handle().pipe(
       map(data => {
         return {
