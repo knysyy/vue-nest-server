@@ -6,10 +6,11 @@ import {
 import { InjectRepository } from "@nestjs/typeorm";
 import User from "./entity/users.entity";
 import { Repository, UpdateResult } from "typeorm";
-import { UserInterface } from "./interface/user.interface";
 import * as uuid4 from "uuid/v4";
 import * as bcrypt from "bcryptjs";
 import { encryptConstants } from "../../config/server.constatnts";
+import { RegisterUserDto } from "../auth/dto/register-user.dto";
+import { UpdateUserDto } from "./dto/update-user.dto";
 
 @Injectable()
 export class UsersService {
@@ -18,9 +19,9 @@ export class UsersService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async logout(user: UserInterface): Promise<void> {
+  async logout(user: User): Promise<void> {
     const result: UpdateResult = await this.userRepository.update(
-      { email: user.email },
+      { token: user.token },
       { token: uuid4() },
     );
     if (result.affected < 0) {
@@ -36,7 +37,7 @@ export class UsersService {
     return this.userRepository.findOne({ where: { token } });
   }
 
-  async register(reqUser: UserInterface): Promise<User> {
+  async register(reqUser: RegisterUserDto): Promise<User> {
     const user = await this.findByEmail(reqUser.email);
     if (user) {
       throw new InternalServerErrorException();
@@ -44,6 +45,12 @@ export class UsersService {
     const newUser = this.userRepository.create(reqUser);
     newUser.password = this.hashPassword(reqUser.password);
     return this.userRepository.save(newUser);
+  }
+
+  async update(reqUser: User, newUser: UpdateUserDto): Promise<User> {
+    await this.userRepository.update({ token: reqUser.token }, { ...newUser });
+    reqUser.setProperty({ ...newUser });
+    return reqUser;
   }
 
   protected hashPassword(password: string): string {

@@ -1,8 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { UserInterface } from "../interface/user.interface";
 
 @Entity("users")
-export default class User implements UserInterface {
+export default class User {
   @PrimaryGeneratedColumn()
   public id: number;
 
@@ -17,4 +16,8 @@ export default class User implements UserInterface {
 
   @Column({ type: "uuid", default: () => "uuid_generate_v4()" })
   public token: string;
+
+  setProperty(properties: Partial<User>) {
+    Object.assign(this, properties);
+  }
 }

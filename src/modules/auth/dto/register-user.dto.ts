@@ -5,9 +5,8 @@ import {
   Length,
   MaxLength,
 } from "class-validator";
-import { UserInterface } from "../../users/interface/user.interface";
 
-export class RegisterUserDto implements UserInterface {
+export class RegisterUserDto {
   @IsString()
   @IsNotEmpty()
   @MaxLength(30)
