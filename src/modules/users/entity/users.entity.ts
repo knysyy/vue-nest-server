@@ -1,4 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import Snippet from "../../snippets/entity/snippets.entity";
+import Label from "../../labels/entity/labels.entity";
+import Language from "../../languages/entity/languages.entity";
 
 @Entity("users")
 export default class User {
@@ -16,6 +19,15 @@ export default class User {
 
   @Column({ type: "uuid", default: () => "uuid_generate_v4()" })
   public token: string;
+
+  @OneToMany(type => Snippet, snippet => snippet.user)
+  snippets: Snippet[];
+
+  @OneToMany(type => Label, label => label.user)
+  labels: Label[];
+
+  @OneToMany(type => Language, language => language.user)
+  language: Snippet[];
 
   setProperty(properties: Partial<User>) {
     Object.assign(this, properties);
