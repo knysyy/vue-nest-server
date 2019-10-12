@@ -1,7 +1,7 @@
-import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import Snippet from "./entity/snippets.entity";
-import { Repository } from "typeorm";
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import Snippet from './entity/snippets.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class SnippetsService {
@@ -13,7 +13,7 @@ export class SnippetsService {
   async getSnippets(userId: number): Promise<Snippet[]> {
     return this.snippetRepository.find({
       where: { userId },
-      relations: ["labels", "language"],
+      relations: ['labels', 'language'],
     });
   }
 }

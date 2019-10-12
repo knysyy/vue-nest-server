@@ -4,9 +4,9 @@ import {
   ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
-} from "typeorm";
-import Snippet from "../../snippets/entity/snippets.entity";
-import User from "../../users/entity/users.entity";
+} from 'typeorm';
+import Snippet from '../../snippets/entity/snippets.entity';
+import User from '../../users/entity/users.entity';
 
 @Entity()
 export default class Label {

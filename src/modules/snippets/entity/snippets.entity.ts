@@ -5,10 +5,10 @@ import {
   ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
-} from "typeorm";
-import User from "../../users/entity/users.entity";
-import Label from "../../labels/entity/labels.entity";
-import Language from "../../languages/entity/languages.entity";
+} from 'typeorm';
+import User from '../../users/entity/users.entity';
+import Label from '../../labels/entity/labels.entity';
+import Language from '../../languages/entity/languages.entity';
 
 @Entity()
 export default class Snippet {
@@ -21,7 +21,7 @@ export default class Snippet {
   @Column({ length: 255 })
   public description: string;
 
-  @Column({ type: "text" })
+  @Column({ type: 'text' })
   public content: string;
 
   @ManyToMany(type => Label, label => label.snippets)

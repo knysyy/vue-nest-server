@@ -1,5 +1,5 @@
-import { SnippetResponse } from "./snippet.response";
-import { Type } from "class-transformer";
+import { SnippetResponse } from './snippet.response';
+import { Type } from 'class-transformer';
 
 export class SnippetsResponse {
   @Type(() => SnippetResponse)

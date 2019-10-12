@@ -1,8 +1,8 @@
-import { Entity } from "typeorm";
-import { Exclude } from "class-transformer";
-import Language from "../entity/languages.entity";
-import Snippet from "../../snippets/entity/snippets.entity";
-import User from "../../users/entity/users.entity";
+import { Entity } from 'typeorm';
+import { Exclude } from 'class-transformer';
+import Language from '../entity/languages.entity';
+import Snippet from '../../snippets/entity/snippets.entity';
+import User from '../../users/entity/users.entity';
 
 @Entity()
 export default class LanguagesResponse extends Language {

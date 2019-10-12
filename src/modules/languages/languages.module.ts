@@ -1,6 +1,6 @@
-import { Module } from "@nestjs/common";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import Language from "./entity/languages.entity";
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import Language from './entity/languages.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Language])],

@@ -8,17 +8,17 @@ import {
   Request,
   UseGuards,
   UseInterceptors,
-} from "@nestjs/common";
-import { AuthGuard } from "@nestjs/passport";
-import { UserResponse } from "./response/user.response";
-import { UsersService } from "./users.service";
-import { UpdateUserDto } from "./dto/update-user.dto";
+} from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { UserResponse } from './response/user.response';
+import { UsersService } from './users.service';
+import { UpdateUserDto } from './dto/update-user.dto';
 
-@Controller("api/user")
+@Controller('api/user')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @UseGuards(AuthGuard("jwt"))
+  @UseGuards(AuthGuard('jwt'))
   @UseInterceptors(ClassSerializerInterceptor)
   @HttpCode(200)
   @Get()
@@ -26,7 +26,7 @@ export class UsersController {
     return new UserResponse(req.user);
   }
 
-  @UseGuards(AuthGuard("jwt"))
+  @UseGuards(AuthGuard('jwt'))
   @UseInterceptors(ClassSerializerInterceptor)
   @HttpCode(200)
   @Post()

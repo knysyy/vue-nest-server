@@ -1,8 +1,8 @@
-import Snippet from "../entity/snippets.entity";
-import { Exclude, Transform, Type } from "class-transformer";
-import Label from "../../labels/entity/labels.entity";
-import Language from "../../languages/entity/languages.entity";
-import User from "../../users/entity/users.entity";
+import Snippet from '../entity/snippets.entity';
+import { Exclude, Transform, Type } from 'class-transformer';
+import Label from '../../labels/entity/labels.entity';
+import Language from '../../languages/entity/languages.entity';
+import User from '../../users/entity/users.entity';
 
 export class SnippetResponse extends Snippet {
   @Type(() => Label)

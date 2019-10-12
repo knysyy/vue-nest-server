@@ -1,10 +1,10 @@
-import { NestFactory } from "@nestjs/core";
-import { AppModule } from "./app.module";
-import * as helmet from "helmet";
-import * as rateLimit from "express-rate-limit";
-import { ValidationPipe } from "@nestjs/common";
-import { HttpExceptionFilter } from "./filters/http-exception.filter";
-import { TransformInterceptor } from "./interceptors/transform.interceptor";
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import * as helmet from 'helmet';
+import * as rateLimit from 'express-rate-limit';
+import { ValidationPipe } from '@nestjs/common';
+import { HttpExceptionFilter } from './filters/http-exception.filter';
+import { TransformInterceptor } from './interceptors/transform.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
