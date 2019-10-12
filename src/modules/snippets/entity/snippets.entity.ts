@@ -26,11 +26,11 @@ export default class Snippet {
 
   @ManyToMany(type => Label, label => label.snippets)
   @JoinTable()
-  labels: Label[];
+  public labels: Label[];
 
   @ManyToOne(type => Language, language => language.snippets)
-  language?: Language;
+  public language?: Language;
 
   @ManyToOne(type => User, user => user.snippets)
-  user: User;
+  public user: User;
 }
