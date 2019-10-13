@@ -6,7 +6,7 @@ import {
   MaxLength,
 } from 'class-validator';
 
-export class RegisterUserDto {
+export default class RegisterUserDto {
   @IsString()
   @IsNotEmpty()
   @MaxLength(30)

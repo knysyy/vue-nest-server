@@ -8,18 +8,19 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { AuthService } from './auth.service';
-import { RegisterUserDto } from './dto/register-user.dto';
-import { TokenEntity } from './entity/token.entity';
+import AuthService from './auth.service';
+import RegisterUserDto from './dto/register-user.dto';
+import TokenResponse from './response/token.response';
 
 @Controller('api/auth')
-export class AuthController {
+export default class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @UseGuards(AuthGuard('local'))
   @Post('login')
-  async logIn(@Request() req): Promise<TokenEntity> {
-    return this.authService.login(req.user);
+  async logIn(@Request() req): Promise<TokenResponse> {
+    const token = await this.authService.login(req.user);
+    return new TokenResponse(token);
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -30,8 +31,9 @@ export class AuthController {
   }
 
   @Post('signup')
-  async signUp(@Body() userDto: RegisterUserDto): Promise<TokenEntity> {
+  async signUp(@Body() userDto: RegisterUserDto): Promise<TokenResponse> {
     const user = await this.authService.signUp(userDto);
-    return this.authService.login(user);
+    const token = await this.authService.login(user);
+    return new TokenResponse(token);
   }
 }

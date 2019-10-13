@@ -9,11 +9,11 @@ import { Repository, UpdateResult } from 'typeorm';
 import * as uuid4 from 'uuid/v4';
 import * as bcrypt from 'bcryptjs';
 import { encryptConstants } from '../../config/server.constatnts';
-import { RegisterUserDto } from '../auth/dto/register-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import RegisterUserDto from '../auth/dto/register-user.dto';
+import UpdateUserDto from './dto/update-user.dto';
 
 @Injectable()
-export class UsersService {
+export default class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,

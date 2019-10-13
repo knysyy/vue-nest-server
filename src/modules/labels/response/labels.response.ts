@@ -3,7 +3,7 @@ import { Exclude } from 'class-transformer';
 import Snippet from '../../snippets/entity/snippets.entity';
 import User from '../../users/entity/users.entity';
 
-export class LabelsResponse extends Label {
+export default class LabelsResponse extends Label {
   @Exclude()
   id: number;
 

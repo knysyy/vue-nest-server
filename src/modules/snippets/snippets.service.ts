@@ -4,7 +4,7 @@ import Snippet from './entity/snippets.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class SnippetsService {
+export default class SnippetsService {
   constructor(
     @InjectRepository(Snippet)
     private readonly snippetRepository: Repository<Snippet>,

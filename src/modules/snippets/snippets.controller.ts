@@ -1,12 +1,12 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
-import { SnippetsService } from './snippets.service';
+import SnippetsService from './snippets.service';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from '../../decorators/user.decorator';
-import { SnippetsResponse } from './response/snippets.response';
-import { SnippetResponse } from './response/snippet.response';
+import SnippetsResponse from './response/snippets.response';
+import SnippetResponse from './response/snippet.response';
 
 @Controller('api/snippets')
-export class SnippetsController {
+export default class SnippetsController {
   constructor(private readonly snippetsService: SnippetsService) {}
 
   @UseGuards(AuthGuard('jwt'))

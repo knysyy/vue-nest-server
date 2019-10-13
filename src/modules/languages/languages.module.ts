@@ -8,4 +8,4 @@ import Language from './entity/languages.entity';
   controllers: [],
   exports: [TypeOrmModule],
 })
-export class LanguagesModule {}
+export default class LanguagesModule {}

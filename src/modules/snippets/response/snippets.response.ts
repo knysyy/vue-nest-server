@@ -1,7 +1,7 @@
-import { SnippetResponse } from './snippet.response';
+import SnippetResponse from './snippet.response';
 import { Type } from 'class-transformer';
 
-export class SnippetsResponse {
+export default class SnippetsResponse {
   @Type(() => SnippetResponse)
   public snippets: SnippetResponse[];
 

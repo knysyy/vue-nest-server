@@ -1,0 +1,37 @@
+import { MigrationInterface, QueryRunner } from 'typeorm';
+
+export class CreateTable1570814189515 implements MigrationInterface {
+  public async up(queryRunner: QueryRunner): Promise<any> {
+
+
+    await queryRunner.query(
+      `ALTER TABLE "snippet" ADD CONSTRAINT "FK_f8820970452ea314ea44dc73a75" FOREIGN KEY ("languageId") REFERENCES "language"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
+      undefined,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "snippet" ADD CONSTRAINT "FK_da314b917a063a91ffbc59b28e6" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
+      undefined,
+    );
+
+
+  }
+
+  public async down(queryRunner: QueryRunner): Promise<any> {
+
+
+    await queryRunner.query(
+      `ALTER TABLE "snippet" DROP CONSTRAINT "FK_da314b917a063a91ffbc59b28e6"`,
+      undefined,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "snippet" DROP CONSTRAINT "FK_f8820970452ea314ea44dc73a75"`,
+      undefined,
+    );
+
+
+
+
+
+
+  }
+}

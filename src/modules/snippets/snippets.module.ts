@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import Snippet from './entity/snippets.entity';
-import { SnippetsService } from './snippets.service';
-import { SnippetsController } from './snippets.controller';
+import SnippetsService from './snippets.service';
+import SnippetsController from './snippets.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Snippet])],
@@ -10,4 +10,4 @@ import { SnippetsController } from './snippets.controller';
   controllers: [SnippetsController],
   exports: [TypeOrmModule, SnippetsService],
 })
-export class SnippetsModule {}
+export default class SnippetsModule {}

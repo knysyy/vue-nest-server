@@ -4,7 +4,7 @@ import Label from '../../labels/entity/labels.entity';
 import Language from '../../languages/entity/languages.entity';
 import User from '../../users/entity/users.entity';
 
-export class SnippetResponse extends Snippet {
+export default class SnippetResponse extends Snippet {
   @Type(() => Label)
   @Transform(label => label.title)
   public labels: Label[];

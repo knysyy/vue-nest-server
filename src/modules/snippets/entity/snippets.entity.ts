@@ -15,22 +15,26 @@ export default class Snippet {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column({ length: 50 })
+  @Column({ length: 50, nullable: false })
   public title: string;
 
-  @Column({ length: 255 })
+  @Column({ length: 255, nullable: true })
   public description: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', nullable: false })
   public content: string;
 
-  @ManyToMany(type => Label, label => label.snippets)
+  @Column({ default: false, nullable: false })
+  public favorite: boolean;
+
+  @ManyToMany(() => Label, label => label.snippets)
   @JoinTable()
   public labels: Label[];
 
-  @ManyToOne(type => Language, language => language.snippets)
+  @ManyToOne(() => Language, language => language.snippets)
   public language?: Language;
 
-  @ManyToOne(type => User, user => user.snippets)
+  @Column('integer', { nullable: false })
+  @ManyToOne(() => User, user => user.snippets)
   public user: User;
 }

@@ -8,4 +8,4 @@ import Label from './entity/labels.entity';
   controllers: [],
   exports: [TypeOrmModule],
 })
-export class LabelsModule {}
+export default class LabelsModule {}

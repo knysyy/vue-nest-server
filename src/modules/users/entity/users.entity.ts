@@ -20,14 +20,14 @@ export default class User {
   @Column({ type: 'uuid', default: () => 'uuid_generate_v4()' })
   public token: string;
 
-  @OneToMany(type => Snippet, snippet => snippet.user)
+  @OneToMany(() => Snippet, snippet => snippet.user)
   snippets: Snippet[];
 
-  @OneToMany(type => Label, label => label.user)
+  @OneToMany(() => Label, label => label.user)
   labels: Label[];
 
-  @OneToMany(type => Language, language => language.user)
-  language: Snippet[];
+  @OneToMany(() => Language, language => language.user)
+  language: Language[];
 
   setProperty(properties: Partial<User>) {
     Object.assign(this, properties);

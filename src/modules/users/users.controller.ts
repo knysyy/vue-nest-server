@@ -10,12 +10,12 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { UserResponse } from './response/user.response';
-import { UsersService } from './users.service';
-import { UpdateUserDto } from './dto/update-user.dto';
+import UserResponse from './response/user.response';
+import UsersService from './users.service';
+import UpdateUserDto from './dto/update-user.dto';
 
 @Controller('api/user')
-export class UsersController {
+export default class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @UseGuards(AuthGuard('jwt'))

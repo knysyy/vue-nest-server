@@ -1,7 +1,7 @@
 import { Exclude } from 'class-transformer';
 import User from '../entity/users.entity';
 
-export class UserResponse extends User {
+export default class UserResponse extends User {
   @Exclude()
   id: number;
 
