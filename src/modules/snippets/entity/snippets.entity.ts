@@ -27,6 +27,12 @@ export default class Snippet {
   @Column({ default: false, nullable: false })
   public favorite: boolean;
 
+  @Column('integer', { nullable: true })
+  public languageId?: number;
+
+  @Column('integer', { nullable: false })
+  public userId: number;
+
   @ManyToMany(() => Label, label => label.snippets)
   @JoinTable()
   public labels: Label[];
@@ -34,7 +40,6 @@ export default class Snippet {
   @ManyToOne(() => Language, language => language.snippets)
   public language?: Language;
 
-  @Column('integer', { nullable: false })
   @ManyToOne(() => User, user => user.snippets)
   public user: User;
 }

@@ -1,17 +1,11 @@
-import Label from '../entity/labels.entity';
-import { Exclude } from 'class-transformer';
-import Snippet from '../../snippets/entity/snippets.entity';
-import User from '../../users/entity/users.entity';
+import { Type } from 'class-transformer';
+import LabelResponse from './label.response';
 
-export default class LabelsResponse extends Label {
-  @Exclude()
-  id: number;
+export default class LabelsResponse {
+  @Type(() => LabelResponse)
+  public labels: LabelResponse[];
 
-  title: string;
-
-  @Exclude()
-  snippets: Snippet[];
-
-  @Exclude()
-  user: User;
+  constructor(labelResponses: LabelResponse[]) {
+    this.labels = labelResponses;
+  }
 }

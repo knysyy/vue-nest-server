@@ -16,10 +16,12 @@ export default class Language {
   @Column({ length: 50 })
   public title: string;
 
-  @OneToMany(() => Snippet, snippet => snippet.language)
-  snippets: Snippet[];
-
   @Column('integer', { nullable: false })
-  @ManyToOne(() => User, user => user.language)
-  user: User;
+  public userId: number;
+
+  @OneToMany(() => Snippet, snippet => snippet.language)
+  public snippets: Snippet[];
+
+  @ManyToOne(() => User, user => user.languages)
+  public user: User;
 }

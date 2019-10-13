@@ -16,10 +16,12 @@ export default class Label {
   @Column({ length: 50 })
   public title: string;
 
-  @ManyToMany(() => Snippet, snippet => snippet.labels)
-  snippets: Snippet[];
-
   @Column('integer', { nullable: false })
+  public userId: number;
+
+  @ManyToMany(() => Snippet, snippet => snippet.labels)
+  public snippets: Snippet[];
+
   @ManyToOne(() => User, user => user.snippets)
-  user: User;
+  public user: User;
 }

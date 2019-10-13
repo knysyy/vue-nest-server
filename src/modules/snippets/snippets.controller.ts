@@ -1,4 +1,10 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import {
+  ClassSerializerInterceptor,
+  Controller,
+  Get,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import SnippetsService from './snippets.service';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from '../../decorators/user.decorator';
@@ -10,6 +16,7 @@ export default class SnippetsController {
   constructor(private readonly snippetsService: SnippetsService) {}
 
   @UseGuards(AuthGuard('jwt'))
+  @UseInterceptors(ClassSerializerInterceptor)
   @Get()
   async getSnippets(@User('id') userId: number): Promise<SnippetsResponse> {
     const snippets = await this.snippetsService.getSnippets(userId);

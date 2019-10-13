@@ -11,7 +11,7 @@ export class CreateSnippetsTable1570917250213 implements MigrationInterface {
       undefined,
     );
     await queryRunner.query(
-      `ALTER TABLE "snippet" ADD CONSTRAINT "FK_da314b917a063a91ffbc59b28e6" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
+      `ALTER TABLE "snippet" ADD CONSTRAINT "FK_da314b917a063a91ffbc59b28e6" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
       undefined,
     );
   }

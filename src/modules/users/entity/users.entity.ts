@@ -3,7 +3,7 @@ import Snippet from '../../snippets/entity/snippets.entity';
 import Label from '../../labels/entity/labels.entity';
 import Language from '../../languages/entity/languages.entity';
 
-@Entity('users')
+@Entity()
 export default class User {
   @PrimaryGeneratedColumn()
   public id: number;
@@ -21,13 +21,13 @@ export default class User {
   public token: string;
 
   @OneToMany(() => Snippet, snippet => snippet.user)
-  snippets: Snippet[];
+  public snippets: Snippet[];
 
   @OneToMany(() => Label, label => label.user)
-  labels: Label[];
+  public labels: Label[];
 
   @OneToMany(() => Language, language => language.user)
-  language: Language[];
+  public languages: Language[];
 
   setProperty(properties: Partial<User>) {
     Object.assign(this, properties);
