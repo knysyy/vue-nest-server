@@ -14,7 +14,7 @@ import UserResponse from './response/user.response';
 import UsersService from './users.service';
 import UpdateUserDto from './dto/update-user.dto';
 
-@Controller('api/user')
+@Controller('user')
 export default class UsersController {
   constructor(private readonly usersService: UsersService) {}
 

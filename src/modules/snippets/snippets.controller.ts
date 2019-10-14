@@ -11,7 +11,7 @@ import { User } from '../../decorators/user.decorator';
 import SnippetsResponse from './response/snippets.response';
 import SnippetResponse from './response/snippet.response';
 
-@Controller('api/snippets')
+@Controller('snippets')
 export default class SnippetsController {
   constructor(private readonly snippetsService: SnippetsService) {}
 

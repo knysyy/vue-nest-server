@@ -12,7 +12,7 @@ import AuthService from './auth.service';
 import RegisterUserDto from './dto/register-user.dto';
 import TokenResponse from './response/token.response';
 
-@Controller('api/auth')
+@Controller('auth')
 export default class AuthController {
   constructor(private readonly authService: AuthService) {}
 
