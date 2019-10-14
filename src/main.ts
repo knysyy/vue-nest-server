@@ -8,6 +8,7 @@ import { TransformInterceptor } from './interceptors/transform.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.useLogger(app.get('NestWinston'));
   app.setGlobalPrefix('api');
   app.enableCors();
   app.use(helmet());

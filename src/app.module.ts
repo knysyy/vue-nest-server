@@ -10,6 +10,9 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import * as path from 'path';
 import SnippetsModule from './modules/snippets/snippets.module';
 import LanguagesModule from './modules/languages/languages.module';
+import { ConfigService } from './config/config.service';
+import { WinstonModule } from 'nest-winston';
+import { winstonConfigFactory } from './config/winston.config';
 
 @Module({
   imports: [
@@ -19,6 +22,11 @@ import LanguagesModule from './modules/languages/languages.module';
     LanguagesModule,
     ConfigModule,
     MorganModule.forRoot(),
+    WinstonModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: winstonConfigFactory,
+      inject: [ConfigService],
+    }),
     ServeStaticModule.forRoot({
       rootPath: path.join(__dirname, '..', 'public'),
     }),
@@ -34,4 +42,5 @@ import LanguagesModule from './modules/languages/languages.module';
     },
   ],
 })
-export class AppModule {}
+export class AppModule {
+}
