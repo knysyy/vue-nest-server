@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { Connection } from 'typeorm';
 import AuthModule from './modules/auth/auth.module';
 import UsersModule from './modules/users/users.module';
 import { MorganInterceptor, MorganModule } from 'nest-morgan';
@@ -10,12 +9,14 @@ import { ConfigModule } from './config/config.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import * as path from 'path';
 import SnippetsModule from './modules/snippets/snippets.module';
+import LanguagesModule from './modules/languages/languages.module';
 
 @Module({
   imports: [
     AuthModule,
     UsersModule,
     SnippetsModule,
+    LanguagesModule,
     ConfigModule,
     MorganModule.forRoot(),
     ServeStaticModule.forRoot({
@@ -33,6 +34,4 @@ import SnippetsModule from './modules/snippets/snippets.module';
     },
   ],
 })
-export class AppModule {
-  constructor(private readonly connection: Connection) {}
-}
+export class AppModule {}
