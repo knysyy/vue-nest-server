@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import AuthModule from './modules/auth/auth.module';
 import UsersModule from './modules/users/users.module';
-import { MorganInterceptor, MorganModule } from 'nest-morgan';
+import { MorganModule } from 'nest-morgan';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfig } from './config/typeorm.config';
@@ -13,6 +13,7 @@ import LanguagesModule from './modules/languages/languages.module';
 import { ConfigService } from './config/config.service';
 import { WinstonModule } from 'nest-winston';
 import { winstonConfigFactory } from './config/winston.config';
+import { morganConfigFactory } from './config/morgan.config';
 
 @Module({
   imports: [
@@ -38,9 +39,9 @@ import { winstonConfigFactory } from './config/winston.config';
   providers: [
     {
       provide: APP_INTERCEPTOR,
-      useClass: MorganInterceptor('combined'),
+      useFactory: morganConfigFactory,
+      inject: [ConfigService],
     },
   ],
 })
-export class AppModule {
-}
+export class AppModule {}

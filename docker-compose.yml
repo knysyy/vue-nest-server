@@ -14,6 +14,11 @@ services:
       - 5432:5432
     volumes:
       - postgres_data:/var/lib/postgresql/data
+  pgweb:
+    image: donnex/pgweb
+    command: -s --bind=0.0.0.0 --listen=8080 --url postgresql://docker:docker@postgres/docker?sslmode=disable
+    ports:
+      - 8080:8080
 
   redis:
     image: redis:5.0
@@ -21,7 +26,11 @@ services:
       - 6379:6379
     volumes:
       - redis_data:/data
-
+  redisCommander:
+    image: tenstartups/redis-commander
+    command: --redis-host redis
+    ports:
+      - 8081:8081
 
 volumes:
   postgres_data:

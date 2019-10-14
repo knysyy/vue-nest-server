@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import Language from './entity/languages.entity';
 import { Repository } from 'typeorm';
+import CreateLanguageDto from './dto/create-language.dto';
 
 @Injectable()
 export default class LanguagesService {
@@ -32,5 +33,14 @@ export default class LanguagesService {
         id: 'DESC',
       },
     });
+  }
+
+  async createLanguage(
+    userId: number,
+    languageDto: CreateLanguageDto,
+  ): Promise<Language | undefined> {
+    const language = await this.languageRepository.create(languageDto);
+    language.userId = userId;
+    return this.languageRepository.save(language);
   }
 }

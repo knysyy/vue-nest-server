@@ -4,7 +4,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { User } from '../../decorators/user.decorator';
 import SnippetsResponse from './response/snippets.response';
 import SnippetResponse from './response/snippet.response';
-import CreateSnippetDto from './dto/create-snippet';
+import CreateSnippetDto from './dto/create-snippet.dto';
 
 @Controller('snippets')
 export default class SnippetsController {
@@ -28,7 +28,10 @@ export default class SnippetsController {
     @User('id') userId: number,
     @Body() snippetDto: CreateSnippetDto,
   ): Promise<SnippetResponse> {
-    const snippet = await this.snippetsService.createSnippet(userId, snippetDto);
+    const snippet = await this.snippetsService.createSnippet(
+      userId,
+      snippetDto,
+    );
     return new SnippetResponse(snippet);
   }
 }

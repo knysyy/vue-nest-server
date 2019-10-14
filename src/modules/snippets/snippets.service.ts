@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import Snippet from './entity/snippets.entity';
 import { Repository } from 'typeorm';
-import CreateSnippetDto from './dto/create-snippet';
+import CreateSnippetDto from './dto/create-snippet.dto';
 import LanguagesService from '../languages/languages.service';
 import LabelsService from '../labels/labels.service';
 
