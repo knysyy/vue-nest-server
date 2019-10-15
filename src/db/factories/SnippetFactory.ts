@@ -11,6 +11,5 @@ define(Snippet, (
   snippet.description = faker.random.alphaNumeric(20);
   snippet.content = faker.random.alphaNumeric(30);
   snippet.userId = settings.userId;
-  snippet.languageId = settings.languageId;
   return snippet;
 });

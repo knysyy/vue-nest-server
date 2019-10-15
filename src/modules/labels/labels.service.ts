@@ -20,21 +20,17 @@ export default class LabelsService {
     });
   }
 
-  async findByIds(userId: number, labelIds: number[]): Promise<Label[]> {
+  async findByIds(labelIds: number[]): Promise<Label[]> {
     return this.labelRepository.findByIds(labelIds, {
-      where: {
-        userId,
-      },
       order: {
         id: 'DESC',
       },
     });
   }
 
-  async findByTitle(userId: number, text: string): Promise<Label[]> {
+  async findByTitle(text: string): Promise<Label[]> {
     return this.labelRepository.find({
       where: {
-        userId,
         title: Like(`%${text}%`),
       },
       order: {

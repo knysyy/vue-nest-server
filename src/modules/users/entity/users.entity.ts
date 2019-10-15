@@ -1,7 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import Snippet from '../../snippets/entity/snippets.entity';
 import Label from '../../labels/entity/labels.entity';
-import Language from '../../languages/entity/languages.entity';
 
 @Entity()
 export default class User {
@@ -25,9 +24,6 @@ export default class User {
 
   @OneToMany(() => Label, label => label.user)
   public labels: Label[];
-
-  @OneToMany(() => Language, language => language.user)
-  public languages: Language[];
 
   setProperty(properties: Partial<User>) {
     Object.assign(this, properties);

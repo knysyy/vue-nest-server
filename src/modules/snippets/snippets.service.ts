@@ -36,7 +36,7 @@ export default class SnippetsService {
       ? await this.languagesService.findById(userId, languageId)
       : undefined;
     snippet.labels = labelIds
-      ? await this.labelsService.findByIds(userId, labelIds)
+      ? await this.labelsService.findByIds(labelIds)
       : [];
     snippet.userId = userId;
 
