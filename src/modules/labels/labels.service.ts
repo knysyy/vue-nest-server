@@ -28,9 +28,10 @@ export default class LabelsService {
     });
   }
 
-  async findByTitle(text: string): Promise<Label[]> {
+  async findByTitle(userId: number, text: string): Promise<Label[]> {
     return this.labelRepository.find({
       where: {
+        userId,
         title: Like(`%${text}%`),
       },
       order: {

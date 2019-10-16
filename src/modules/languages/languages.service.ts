@@ -32,4 +32,15 @@ export default class LanguagesService {
       },
     });
   }
+
+  async findByTitle(title: string): Promise<Language[]> {
+    return this.languageRepository.find({
+      where: {
+        title,
+      },
+      order: {
+        id: 'DESC',
+      },
+    });
+  }
 }
