@@ -22,6 +22,8 @@ export default class SearchSnippetsDto {
   readonly languageIds?: number[];
 
   @IsOptional()
-  @IsInt({ each: true })
+  @IsInt({
+    each: true,
+  })
   readonly labelIds?: number[];
 }
