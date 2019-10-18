@@ -54,7 +54,7 @@ export default class SnippetsService {
       });
     }
 
-    if (favorite !== undefined) {
+    if (favorite !== undefined && favorite !== null) {
       query = query.andWhere('snippet.favorite = :favorite', {
         favorite,
       });

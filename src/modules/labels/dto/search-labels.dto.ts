@@ -1,7 +1,7 @@
-import { IsOptional, MinLength } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
 export default class SearchLabelsDto {
   @IsOptional()
-  @MinLength(3)
+  @IsString()
   readonly title?: string;
 }
