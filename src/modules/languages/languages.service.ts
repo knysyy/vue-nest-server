@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import Language from './entity/languages.entity';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 
 @Injectable()
 export default class LanguagesService {
@@ -18,14 +18,10 @@ export default class LanguagesService {
     });
   }
 
-  async findById(
-    userId: number,
-    languageId: number,
-  ): Promise<Language | undefined> {
+  async findById(languageId: number): Promise<Language | undefined> {
     return this.languageRepository.findOne({
       where: {
         id: languageId,
-        userId,
       },
       order: {
         id: 'DESC',
@@ -36,7 +32,7 @@ export default class LanguagesService {
   async findByTitle(title: string): Promise<Language[]> {
     return this.languageRepository.find({
       where: {
-        title,
+        title: Like(`%${title}%`),
       },
       order: {
         id: 'DESC',

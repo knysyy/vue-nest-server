@@ -1,4 +1,4 @@
-import { ClassSerializerInterceptor, Controller, Get, Query, UseGuards, UseInterceptors } from '@nestjs/common';
+import { CacheInterceptor, ClassSerializerInterceptor, Controller, Get, Query, UseGuards, UseInterceptors } from '@nestjs/common';
 import LanguagesService from './languages.service';
 import { AuthGuard } from '@nestjs/passport';
 import LanguageResponse from './response/language.response';
@@ -11,6 +11,7 @@ export default class LanguagesController {
 
   @UseGuards(AuthGuard('jwt'))
   @UseInterceptors(ClassSerializerInterceptor)
+  @UseInterceptors(CacheInterceptor)
   @Get()
   async find(
     @Query() searchLanguagesDto: SearchLanguagesDto,

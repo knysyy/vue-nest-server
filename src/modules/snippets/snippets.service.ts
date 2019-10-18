@@ -84,7 +84,7 @@ export default class SnippetsService {
     const snippet = this.snippetRepository.create(reqSnippet);
 
     snippet.language = languageId
-      ? await this.languagesService.findById(userId, languageId)
+      ? await this.languagesService.findById(languageId)
       : undefined;
     snippet.labels = labelIds
       ? await this.labelsService.findByIds(labelIds)
