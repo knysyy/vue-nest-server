@@ -13,7 +13,8 @@ export default class SnippetsController {
 
   @UseGuards(AuthGuard('jwt'))
   @UseInterceptors(ClassSerializerInterceptor)
-  @Post()
+  @HttpCode(200)
+  @Post('search')
   async find(
     @User('id') userId: number,
     @Body() searchSnippetsDto: SearchSnippetsDto,
@@ -27,7 +28,7 @@ export default class SnippetsController {
   @UseGuards(AuthGuard('jwt'))
   @UseInterceptors(ClassSerializerInterceptor)
   @HttpCode(200)
-  @Post()
+  @Post('create')
   async createSnippet(
     @User('id') userId: number,
     @Body() snippetDto: CreateSnippetDto,

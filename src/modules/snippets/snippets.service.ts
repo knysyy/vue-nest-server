@@ -72,7 +72,7 @@ export default class SnippetsService {
       });
     }
 
-    query.orderBy('snippet.id');
+    query.orderBy('snippet.id', 'DESC');
     return query.getMany();
   }
 
