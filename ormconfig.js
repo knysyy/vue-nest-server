@@ -1,7 +1,7 @@
 const dotenv = require('dotenv');
 const fs = require('fs');
 
-const config = dotenv.parse(fs.readFileSync('development.env'));
+const config = dotenv.parse(fs.readFileSync(`${process.env.NODE_ENV || 'development'}.env`));
 module.exports = {
   name: 'default',
   type: config['TYPEORM_CONNECTION'],
