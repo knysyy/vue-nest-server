@@ -1,7 +1,6 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsOptional } from 'class-validator';
 
 export default class SearchLanguagesDto {
   @IsOptional()
-  @IsString()
   readonly title?: string;
 }

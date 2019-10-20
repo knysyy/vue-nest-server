@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Inject, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Inject, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import AuthService from './auth.service';
 import RegisterUserDto from './dto/register-user.dto';
@@ -14,6 +14,7 @@ export default class AuthController {
   ) {}
 
   @UseGuards(AuthGuard('local'))
+  @HttpCode(HttpStatus.OK)
   @Post('login')
   async logIn(@Request() req): Promise<TokenResponse> {
     const token = await this.authService.login(req.user);
@@ -23,12 +24,12 @@ export default class AuthController {
 
   @UseGuards(AuthGuard('jwt'))
   @Get('logout')
-  @HttpCode(202)
   async logOut(@Request() req): Promise<void> {
     await this.authService.logout(req.user);
     this.logger.info(`Logout Success userId : ${req.user.id}`);
   }
 
+  @HttpCode(HttpStatus.OK)
   @Post('signup')
   async signUp(@Body() userDto: RegisterUserDto): Promise<TokenResponse> {
     this.logger.debug('SignUp Parameter', userDto);

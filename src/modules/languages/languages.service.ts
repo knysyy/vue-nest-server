@@ -13,7 +13,7 @@ export default class LanguagesService {
   async findAll(): Promise<Language[]> {
     return this.languageRepository.find({
       order: {
-        id: 'DESC',
+        id: 'ASC',
       },
     });
   }
@@ -24,7 +24,7 @@ export default class LanguagesService {
         id: languageId,
       },
       order: {
-        id: 'DESC',
+        id: 'ASC',
       },
     });
   }
@@ -35,7 +35,7 @@ export default class LanguagesService {
         title: Like(`%${title}%`),
       },
       order: {
-        id: 'DESC',
+        id: 'ASC',
       },
     });
   }

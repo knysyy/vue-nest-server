@@ -1,14 +1,4 @@
-import {
-  Body,
-  ClassSerializerInterceptor,
-  Controller,
-  Get,
-  HttpCode,
-  Post,
-  Request,
-  UseGuards,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Body, ClassSerializerInterceptor, Controller, Get, HttpCode, HttpStatus, Post, Request, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import UserResponse from './response/user.response';
 import UsersService from './users.service';
@@ -20,7 +10,7 @@ export default class UsersController {
 
   @UseGuards(AuthGuard('jwt'))
   @UseInterceptors(ClassSerializerInterceptor)
-  @HttpCode(200)
+  @HttpCode(HttpStatus.OK)
   @Get()
   getUser(@Request() req): UserResponse {
     return new UserResponse(req.user);
@@ -28,7 +18,7 @@ export default class UsersController {
 
   @UseGuards(AuthGuard('jwt'))
   @UseInterceptors(ClassSerializerInterceptor)
-  @HttpCode(200)
+  @HttpCode(HttpStatus.OK)
   @Post()
   async update(
     @Request() req,

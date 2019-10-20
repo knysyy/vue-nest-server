@@ -1,16 +1,13 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, MaxLength } from 'class-validator';
 
 export default class CreateSnippetDto {
-  @IsString()
   @IsNotEmpty()
   @MaxLength(50)
   readonly title: string;
 
-  @IsString()
   @MaxLength(255)
   readonly description: string;
 
-  @IsString()
   @IsNotEmpty()
   readonly content: string;
 

@@ -5,6 +5,7 @@ import * as rateLimit from 'express-rate-limit';
 import { ValidationPipe } from '@nestjs/common';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { TransformInterceptor } from './interceptors/transform.interceptor';
+import { exceptionFactory } from './util/ExceptionFactory';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -16,9 +17,9 @@ async function bootstrap() {
   app.useGlobalInterceptors(new TransformInterceptor());
   app.useGlobalPipes(
     new ValidationPipe({
-      disableErrorMessages: false,
       whitelist: true,
       transform: true,
+      exceptionFactory,
     }),
   );
   app.use(

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import Snippet from './entity/snippets.entity';
 import { Repository } from 'typeorm';
@@ -6,6 +6,7 @@ import CreateSnippetDto from './dto/create-snippet.dto';
 import LanguagesService from '../languages/languages.service';
 import LabelsService from '../labels/labels.service';
 import SearchSnippetsDto from './dto/search-snippets.dto';
+import FavoriteSnippetDto from './dto/favorite-snippet.dto';
 
 @Injectable()
 export default class SnippetsService {
@@ -92,6 +93,35 @@ export default class SnippetsService {
     snippet.userId = userId;
 
     return this.snippetRepository.save(snippet);
+  }
+
+  async deleteSnippet(userId: number, snippetId: number): Promise<void> {
+    const result = await this.snippetRepository.delete({
+      userId,
+      id: snippetId,
+    });
+    if (result.affected === 0) {
+      throw new BadRequestException();
+    }
+  }
+
+  async favoriteSnippet(
+    userId: number,
+    favoriteSnippetDto: FavoriteSnippetDto,
+  ): Promise<void> {
+    const { id, favorite } = favoriteSnippetDto;
+    const result = await this.snippetRepository.update(
+      {
+        userId,
+        id,
+      },
+      {
+        favorite,
+      },
+    );
+    if (result.affected === 0) {
+      throw new BadRequestException();
+    }
   }
 
   addPercentSign(text?: string): string {
