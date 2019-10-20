@@ -1,8 +1,6 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import AuthModule from './modules/auth/auth.module';
 import UsersModule from './modules/users/users.module';
-import { MorganModule } from 'nest-morgan';
-import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfig } from './config/typeorm.config';
 import { ConfigModule } from './config/config.module';
@@ -13,7 +11,7 @@ import LanguagesModule from './modules/languages/languages.module';
 import { ConfigService } from './config/config.service';
 import { WinstonModule } from 'nest-winston';
 import { winstonConfigFactory } from './config/winston.config';
-import { morganConfigFactory } from './config/morgan.config';
+import { MorganMiddleware } from './middlewares/MorganMiddleware';
 
 @Module({
   imports: [
@@ -22,7 +20,6 @@ import { morganConfigFactory } from './config/morgan.config';
     SnippetsModule,
     LanguagesModule,
     ConfigModule,
-    MorganModule.forRoot(),
     WinstonModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: winstonConfigFactory,
@@ -36,12 +33,9 @@ import { morganConfigFactory } from './config/morgan.config';
       useExisting: TypeOrmConfig,
     }),
   ],
-  providers: [
-    {
-      provide: APP_INTERCEPTOR,
-      useFactory: morganConfigFactory,
-      inject: [ConfigService],
-    },
-  ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(MorganMiddleware).forRoutes('*');
+  }
+}
