@@ -100,6 +100,7 @@ export default class SnippetsService {
       userId,
       id: snippetId,
     });
+
     if (result.affected === 0) {
       throw new BadRequestException();
     }

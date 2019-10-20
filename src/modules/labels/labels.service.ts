@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import Label from './entity/labels.entity';
 import { Like, Repository } from 'typeorm';
@@ -47,5 +47,16 @@ export default class LabelsService {
     const label = await this.labelRepository.create(labelDto);
     label.userId = userId;
     return this.labelRepository.save(label);
+  }
+
+  async deleteLabel(userId: number, labelId: number): Promise<void> {
+    const result = await this.labelRepository.delete({
+      userId,
+      id: labelId,
+    });
+
+    if (result.affected === 0) {
+      throw new BadRequestException();
+    }
   }
 }
