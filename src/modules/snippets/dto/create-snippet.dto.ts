@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsOptional, MaxLength } from 'class-validator';
+import { IsInt, IsNotEmpty, IsOptional, MaxLength } from 'class-validator';
 
 export default class CreateSnippetDto {
   @IsNotEmpty()
@@ -12,10 +12,12 @@ export default class CreateSnippetDto {
   readonly content: string;
 
   @IsOptional()
-  @IsNumber()
-  readonly languageId: number;
+  @IsInt()
+  readonly languageId?: number;
 
   @IsOptional()
-  @IsNumber({}, { each: true })
-  readonly labelIds: number[];
+  @IsInt({
+    each: true,
+  })
+  readonly labelIds?: number[];
 }

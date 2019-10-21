@@ -1,13 +1,12 @@
-import { IsEmail, IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import { IsEmail, IsNotEmpty, MaxLength } from 'class-validator';
 
 export default class UpdateUserDto {
-  @IsString()
-  @IsNotEmpty()
   @MaxLength(30)
+  @IsNotEmpty()
   readonly name: string;
 
   @IsEmail()
-  @IsNotEmpty()
   @MaxLength(255)
+  @IsNotEmpty()
   readonly email: string;
 }

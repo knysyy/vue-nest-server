@@ -29,6 +29,10 @@ export const exceptionFactory = (validationErrors: ValidationError[]) => {
         message = value;
         break;
       }
+      if (key === 'isInt') {
+        message = value;
+        break;
+      }
       message = '';
     }
     return { property, message };
