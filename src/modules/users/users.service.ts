@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import User from './entity/users.entity';
 import { Repository, UpdateResult } from 'typeorm';
@@ -40,7 +36,7 @@ export default class UsersService {
   async register(reqUser: RegisterUserDto): Promise<User> {
     const user = await this.findByEmail(reqUser.email);
     if (user) {
-      throw new InternalServerErrorException();
+      throw new BadRequestException();
     }
     const newUser = this.userRepository.create(reqUser);
     newUser.password = this.hashPassword(reqUser.password);

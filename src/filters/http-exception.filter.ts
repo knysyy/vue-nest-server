@@ -7,6 +7,7 @@ interface ResponseBody {
   message: string;
   messages?: string;
 }
+
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
@@ -27,7 +28,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
         messages: exception.message.message,
       };
     }
-
     response.status(status).json(responseBody);
   }
 }
