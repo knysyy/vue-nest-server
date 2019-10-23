@@ -7,6 +7,7 @@ import LanguagesService from '../languages/languages.service';
 import LabelsService from '../labels/labels.service';
 import SearchSnippetsDto from './dto/search-snippets.dto';
 import FavoriteSnippetDto from './dto/favorite-snippet.dto';
+import EditSnippetDto from './dto/edit-snippet.dto';
 
 @Injectable()
 export default class SnippetsService {
@@ -80,7 +81,7 @@ export default class SnippetsService {
   async createSnippet(
     userId: number,
     snippetDto: CreateSnippetDto,
-  ): Promise<Snippet | undefined> {
+  ): Promise<Snippet> {
     const { languageId, labelIds, ...reqSnippet } = snippetDto;
     const snippet = this.snippetRepository.create(reqSnippet);
 
@@ -123,6 +124,30 @@ export default class SnippetsService {
     if (result.affected === 0) {
       throw new BadRequestException();
     }
+  }
+
+  async editSnippet(
+    userId: number,
+    editSnippetDto: EditSnippetDto,
+  ): Promise<Snippet> {
+    const { id, languageId, labelIds, ...reqSnippet } = editSnippetDto;
+    const snippet = await this.snippetRepository.findOne({
+      where: {
+        id,
+        userId,
+      },
+    });
+    if (!snippet) {
+      throw new BadRequestException();
+    }
+    snippet.language = languageId
+      ? await this.languagesService.findById(languageId)
+      : undefined;
+    snippet.labels = labelIds
+      ? await this.labelsService.findByIds(labelIds)
+      : [];
+    Object.assign(this, reqSnippet);
+    return this.snippetRepository.save(snippet);
   }
 
   addPercentSign(text?: string): string {

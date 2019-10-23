@@ -8,6 +8,7 @@ import CreateSnippetDto from './dto/create-snippet.dto';
 import SearchSnippetsDto from './dto/search-snippets.dto';
 import FavoriteSnippetDto from './dto/favorite-snippet.dto';
 import { ParseIntPipe } from '../../pipes/parse-int.pipe';
+import EditSnippetDto from './dto/edit-snippet.dto';
 
 @Controller('snippets')
 export default class SnippetsController {
@@ -60,5 +61,19 @@ export default class SnippetsController {
     @Body() favoriteSnippetDto: FavoriteSnippetDto,
   ): Promise<void> {
     await this.snippetsService.favoriteSnippet(userId, favoriteSnippetDto);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @HttpCode(HttpStatus.OK)
+  @Post('edit')
+  async editSnippet(
+    @User('id') userId: number,
+    @Body() editSnippetDto: EditSnippetDto,
+  ): Promise<SnippetResponse> {
+    const snippet = await this.snippetsService.editSnippet(
+      userId,
+      editSnippetDto,
+    );
+    return new SnippetResponse(snippet);
   }
 }
