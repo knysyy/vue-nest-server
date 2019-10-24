@@ -8,7 +8,7 @@ import { ConfigService } from '../../config/config.service';
     CacheModule.registerAsync({
       imports: [ConfigModule],
       useFactory: cacheConfigFactory,
-      inject: [ConfigService]
+      inject: [ConfigService],
     }),
   ],
   exports: [CacheModule],

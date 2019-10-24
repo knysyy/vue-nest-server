@@ -37,7 +37,7 @@ import { TerminusOptionsService } from './modules/health/terminus-options.servic
     }),
     TerminusModule.forRootAsync({
       imports: [HealthModule],
-      useExisting: TerminusOptionsService
+      useExisting: TerminusOptionsService,
     }),
   ],
 })
