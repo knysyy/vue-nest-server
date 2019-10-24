@@ -12,6 +12,9 @@ import { ConfigService } from './config/config.service';
 import { WinstonModule } from 'nest-winston';
 import { winstonConfigFactory } from './config/winston.config';
 import { MorganMiddleware } from './middlewares/MorganMiddleware';
+import { TerminusModule } from '@nestjs/terminus';
+import { HealthModule } from './modules/health/health.module';
+import { TerminusOptionsService } from './modules/health/terminus-options.service';
 
 @Module({
   imports: [
@@ -31,6 +34,10 @@ import { MorganMiddleware } from './middlewares/MorganMiddleware';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useExisting: TypeOrmConfig,
+    }),
+    TerminusModule.forRootAsync({
+      imports: [HealthModule],
+      useExisting: TerminusOptionsService
     }),
   ],
 })
