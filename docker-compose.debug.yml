@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  node:
+    image: node:10.13-alpine
+    container_name: node
+    tty: true
+    init: true
+    environment:
+      NODE_ENV: development
+    ports:
+      - 3000:3000
+      - 9229:9229
+    volumes:
+      - ./:/app
+    working_dir: /app
+    command: node --inspect=0.0.0.0:9229 dist/main.js

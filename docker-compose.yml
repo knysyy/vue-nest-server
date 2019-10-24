@@ -1,6 +1,17 @@
-version: '3'
+version: '3.7'
 
 services:
+  node:
+    image: node:10.13-alpine
+    container_name: node
+    tty: true
+    init: true
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/app
+    working_dir: /app
+
   postgres:
     image: postgres:10.5
     container_name: postgres
@@ -14,11 +25,16 @@ services:
       - 5432:5432
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init:/docker-entrypoint-initdb.d
+
   pgweb:
     image: donnex/pgweb
-    command: -s --bind=0.0.0.0 --listen=8080 --url postgresql://docker:docker@postgres/docker?sslmode=disable
+    restart: always
     ports:
       - 8081:8080
+    command: -s --bind=0.0.0.0 --listen=8080 --url postgresql://docker:docker@postgres/docker?sslmode=disable
+    depends_on:
+      - postgres
 
   redis:
     image: redis:5.0
