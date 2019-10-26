@@ -63,14 +63,22 @@ export default class SnippetsService {
     }
 
     if (languageIds !== undefined && languageIds.length > 0) {
-      query = query.andWhere('language.id IN (:...languageIds)', {
+      query = query.andWhere('snippet.languageId IN (:...languageIds)', {
         languageIds,
       });
     }
 
     if (labelIds !== undefined && labelIds.length > 0) {
-      query = query.andWhere('label.id IN (:...labelIds)', {
-        labelIds,
+      query = query.andWhere(qb => {
+        const subQuery = qb
+          .subQuery()
+          .select('snippet_label.snippetId')
+          .from('snippet_labels_label', 'snippet_label')
+          .where('snippet_label.labelId IN (:...labelIds)', {
+            labelIds,
+          })
+          .getQuery();
+        return 'snippet.id IN ' + subQuery;
       });
     }
 
@@ -146,7 +154,7 @@ export default class SnippetsService {
     snippet.labels = labelIds
       ? await this.labelsService.findByIds(labelIds)
       : [];
-    Object.assign(this, reqSnippet);
+    Object.assign(snippet, reqSnippet);
     return this.snippetRepository.save(snippet);
   }
 

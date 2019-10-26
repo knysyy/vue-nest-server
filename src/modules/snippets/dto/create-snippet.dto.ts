@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty, IsOptional, MaxLength } from 'class-validator';
+import { IsBoolean, IsInt, IsNotEmpty, IsOptional, MaxLength } from 'class-validator';
 
 export default class CreateSnippetDto {
   @IsNotEmpty()
@@ -20,4 +20,8 @@ export default class CreateSnippetDto {
     each: true,
   })
   readonly labelIds?: number[];
+
+  @IsBoolean()
+  @IsNotEmpty()
+  readonly favorite: boolean;
 }
