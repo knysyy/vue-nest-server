@@ -49,6 +49,12 @@ services:
     ports:
       - 8082:8081
 
+  maildev:
+    image: kanemu/maildev-with-iconv
+    ports:
+      - "8025:80"
+    command: bin/maildev -w 80 -s 25 --incoming-user user --incoming-pass password
+
 volumes:
   postgres_data:
   redis_data:
