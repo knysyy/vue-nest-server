@@ -20,7 +20,7 @@ export default class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   @HttpCode(HttpStatus.OK)
   @Post()
-  async update(
+  async editUser(
     @Request() req,
     @Body() userDto: UpdateUserDto,
   ): Promise<UserResponse> {

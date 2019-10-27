@@ -15,6 +15,8 @@ import { MorganMiddleware } from './middlewares/MorganMiddleware';
 import { TerminusModule } from '@nestjs/terminus';
 import { HealthModule } from './modules/health/health.module';
 import { TerminusOptionsService } from './modules/health/terminus-options.service';
+import { MailerModule } from '@nest-modules/mailer';
+import { mailerConfigFactory } from './config/mailer.config';
 
 @Module({
   imports: [
@@ -34,6 +36,11 @@ import { TerminusOptionsService } from './modules/health/terminus-options.servic
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useExisting: TypeOrmConfig,
+    }),
+    MailerModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: mailerConfigFactory,
+      inject: [ConfigService],
     }),
     TerminusModule.forRootAsync({
       imports: [HealthModule],

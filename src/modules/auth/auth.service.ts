@@ -6,6 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 import RegisterUserDto from './dto/register-user.dto';
 import { Logger } from 'winston';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston/dist/winston.constants';
+import { MailerService } from '@nest-modules/mailer';
 
 @Injectable()
 export default class AuthService {
@@ -13,6 +14,7 @@ export default class AuthService {
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
+    private readonly mailerService: MailerService,
   ) {}
 
   async validateUserByEmailAndPass(
@@ -46,6 +48,16 @@ export default class AuthService {
   }
 
   async signUp(user: RegisterUserDto): Promise<User> {
-    return this.usersService.register(user);
+    const newUser = await this.usersService.register(user);
+    await this.mailerService.sendMail({
+      to: newUser.email,
+      subject: 'Email Verification',
+      template: 'signup',
+      context: {
+        name: newUser.name,
+        link: 'http://test.com',
+      },
+    });
+    return newUser;
   }
 }
