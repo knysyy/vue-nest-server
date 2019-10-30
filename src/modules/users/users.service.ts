@@ -40,6 +40,8 @@ export default class UsersService {
     }
     const newUser = this.userRepository.create(reqUser);
     newUser.password = this.hashPassword(reqUser.password);
+    // TODO Tokenの生成方法を検討。
+    newUser.verificationToken = uuid4();
     return this.userRepository.save(newUser);
   }
 

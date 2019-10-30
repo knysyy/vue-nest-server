@@ -19,6 +19,12 @@ export default class User {
   @Column({ type: 'uuid', default: () => 'uuid_generate_v4()' })
   public token: string;
 
+  @Column({ default: false })
+  public verified: boolean;
+
+  @Column({ length: 80, nullable: true })
+  public verificationToken: string;
+
   @OneToMany(() => Snippet, snippet => snippet.user)
   public snippets: Snippet[];
 
