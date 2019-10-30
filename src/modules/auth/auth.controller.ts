@@ -1,15 +1,19 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Inject, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Inject, Param, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import AuthService from './auth.service';
 import RegisterUserDto from './dto/register-user.dto';
 import TokenResponse from './response/token.response';
 import { Logger } from 'winston';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston/dist/winston.constants';
+import { InjectEventEmitter } from 'nest-emitter';
+import { AuthEventEmitter } from '../../events/auth.events';
 
 @Controller('auth')
 export default class AuthController {
   constructor(
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
+    @InjectEventEmitter()
+    private readonly authEventEmitter: AuthEventEmitter,
     private readonly authService: AuthService,
   ) {}
 
@@ -31,11 +35,21 @@ export default class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('signup')
-  async signUp(@Body() userDto: RegisterUserDto): Promise<TokenResponse> {
+  async signUp(@Body() userDto: RegisterUserDto): Promise<void> {
     this.logger.debug('SignUp Parameter', userDto);
     const user = await this.authService.signUp(userDto);
+    this.authEventEmitter.emit('signup', {
+      name: user.name,
+      email: user.email,
+      verificationToken: user.verificationToken,
+    });
     this.logger.info(`SignUp Success userId : ${user.id}`);
-    const token = await this.authService.login(user);
-    return new TokenResponse(token);
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Get('verify/:token')
+  async verify(@Param('token') token: string): Promise<void> {
+    // TODO tokenの検証処理を実装。
+    return;
   }
 }

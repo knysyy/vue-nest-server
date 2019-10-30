@@ -17,6 +17,8 @@ import { HealthModule } from './modules/health/health.module';
 import { TerminusOptionsService } from './modules/health/terminus-options.service';
 import { MailerModule } from '@nest-modules/mailer';
 import { mailerConfigFactory } from './config/mailer.config';
+import { NestEmitterModule } from 'nest-emitter';
+import { EventEmitter } from 'events';
 
 @Module({
   imports: [
@@ -46,6 +48,7 @@ import { mailerConfigFactory } from './config/mailer.config';
       imports: [HealthModule],
       useExisting: TerminusOptionsService,
     }),
+    NestEmitterModule.forRoot(new EventEmitter()),
   ],
 })
 export class AppModule implements NestModule {

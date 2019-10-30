@@ -12,6 +12,7 @@ define(User, (faker: typeof Faker) => {
   user.name = faker.internet.userName(firstName, lastName);
   user.email = faker.internet.email(firstName, lastName);
   user.token = uuid.v4();
+  user.verified = true;
   user.password = bcrypt.hashSync('test1234', bcrypt.genSaltSync(10));
   return user;
 });
