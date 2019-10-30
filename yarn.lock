@@ -4503,6 +4503,11 @@ neo-async@^2.6.0:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
 
+nest-emitter@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/nest-emitter/-/nest-emitter-1.1.0.tgz#fbdcc14dedbed066275c96b64bc27ef1dfaeb197"
+  integrity sha512-x+sLW7U7xmd67P4pTt8qw5W6fDHiwzzoiBDJCjPcwgwCg8PvIpBwmTUEagDMdDR/qrG8iHdifgwoETp0OdMLYA==
+
 nest-winston@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/nest-winston/-/nest-winston-1.1.2.tgz#5c9ad6b3b3a86f1cef501c32195164aff6ce7869"
