@@ -15,10 +15,7 @@ export default class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async validateUserByEmailAndPass(
-    email: string,
-    pass: string,
-  ): Promise<User | undefined> {
+  async validateUserByEmailAndPass(email: string, pass: string): Promise<User> {
     const user = await this.usersService.findByEmail(email);
     if (user && bcrypt.compareSync(pass, user.password)) {
       return user;
@@ -27,27 +24,31 @@ export default class AuthService {
     return null;
   }
 
-  async validateUserByToken(payloadToken: string): Promise<User | undefined> {
+  async validateUserByToken(payloadToken: string): Promise<User> {
     const user = await this.usersService.findByToken(payloadToken);
     if (user) {
       return user;
     }
     this.logger.error(`User Not Found, request payloadToken : ${payloadToken}`);
-    // TODO 独自のエラーを実装。
     return null;
   }
 
   async login(user: User): Promise<string> {
     const payload = { email: user.email, id: user.id, token: user.token };
-    return this.jwtService.sign(payload);
+    const token = this.jwtService.sign(payload);
+    this.logger.info(`Login Success. userId : ${user.id}`);
+    return token;
   }
 
   async logout(user: User): Promise<void> {
     await this.usersService.logout(user);
+    this.logger.info(`Logout Success. userId : ${user.id}`);
   }
 
   async signUp(user: RegisterUserDto): Promise<User> {
-    return await this.usersService.register(user);
+    const newUser = await this.usersService.register(user);
+    this.logger.info(`SignUp Success. userId : ${newUser.id}`);
+    return newUser;
   }
 
   async verifyEmail(token: string): Promise<void> {

@@ -20,7 +20,8 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm:cli": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "migration": "npm run typeorm:cli migration:run",
-    "seed": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed"
+    "seed": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed",
+    "debug": "docker-compose stop node && npm run build:dev && docker-compose -f docker-compose.yml -f docker-compose.debug.yml up -d"
   },
   "dependencies": {
     "@godaddy/terminus": "^4.2.1",
