@@ -6,14 +6,14 @@ import TokenResponse from './response/token.response';
 import { Logger } from 'winston';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston/dist/winston.constants';
 import { InjectEventEmitter } from 'nest-emitter';
-import { AuthEventEmitter } from '../../events/auth.events';
+import { AuthEventsEmitter } from '../../events/auth.events';
 
 @Controller('auth')
 export default class AuthController {
   constructor(
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
     @InjectEventEmitter()
-    private readonly authEventEmitter: AuthEventEmitter,
+    private readonly authEventsEmitter: AuthEventsEmitter,
     private readonly authService: AuthService,
   ) {}
 
@@ -22,7 +22,6 @@ export default class AuthController {
   @Post('login')
   async logIn(@Request() req): Promise<TokenResponse> {
     const token = await this.authService.login(req.user);
-    this.logger.info(`Login Success. userId : ${req.user.id}`);
     return new TokenResponse(token);
   }
 
@@ -30,7 +29,6 @@ export default class AuthController {
   @Get('logout')
   async logOut(@Request() req): Promise<void> {
     await this.authService.logout(req.user);
-    this.logger.info(`Logout Success. userId : ${req.user.id}`);
   }
 
   @HttpCode(HttpStatus.OK)
@@ -38,12 +36,11 @@ export default class AuthController {
   async signUp(@Body() userDto: RegisterUserDto): Promise<void> {
     this.logger.debug(`SignUp Parameter : ${JSON.stringify(userDto)}`);
     const user = await this.authService.signUp(userDto);
-    this.authEventEmitter.emit('signup', {
+    this.authEventsEmitter.emit('signup', {
       name: user.name,
       email: user.email,
       verificationToken: user.verificationToken,
     });
-    this.logger.info(`SignUp Success. userId : ${user.id}`);
   }
 
   @HttpCode(HttpStatus.OK)

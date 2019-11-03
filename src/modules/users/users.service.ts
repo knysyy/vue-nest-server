@@ -36,7 +36,7 @@ export default class UsersService {
   async register(reqUser: RegisterUserDto): Promise<User> {
     const user = await this.findByEmail(reqUser.email);
     if (user) {
-      throw new BadRequestException();
+      throw new BadRequestException('Email Is Already Registered.');
     }
     const newUser = this.userRepository.create(reqUser);
     newUser.password = this.hashPassword(reqUser.password);
