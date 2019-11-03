@@ -19,6 +19,9 @@ import { MailerModule } from '@nest-modules/mailer';
 import { mailerConfigFactory } from './config/mailer.config';
 import { NestEmitterModule } from 'nest-emitter';
 import { EventEmitter } from 'events';
+import { APP_FILTER } from '@nestjs/core';
+import { HttpExceptionFilter } from './filters/http-exception.filter';
+import ErrorModule from './modules/error/error.module';
 
 @Module({
   imports: [
@@ -26,6 +29,7 @@ import { EventEmitter } from 'events';
     UsersModule,
     SnippetsModule,
     LanguagesModule,
+    ErrorModule,
     WinstonModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: winstonConfigFactory,
@@ -48,6 +52,12 @@ import { EventEmitter } from 'events';
       useExisting: TerminusOptionsService,
     }),
     NestEmitterModule.forRoot(new EventEmitter()),
+  ],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
+    },
   ],
 })
 export class AppModule implements NestModule {
