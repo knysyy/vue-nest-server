@@ -11,4 +11,8 @@ export class ConfigService {
   get(key: string): string {
     return this.envConfig[key];
   }
+
+  getAppUrl(path: string): string {
+    return new URL(path, this.get('APP_URL')).href;
+  }
 }

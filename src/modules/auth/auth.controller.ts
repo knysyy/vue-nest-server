@@ -22,7 +22,7 @@ export default class AuthController {
   @Post('login')
   async logIn(@Request() req): Promise<TokenResponse> {
     const token = await this.authService.login(req.user);
-    this.logger.info(`Login Success userId : ${req.user.id}`);
+    this.logger.info(`Login Success. userId : ${req.user.id}`);
     return new TokenResponse(token);
   }
 
@@ -30,26 +30,25 @@ export default class AuthController {
   @Get('logout')
   async logOut(@Request() req): Promise<void> {
     await this.authService.logout(req.user);
-    this.logger.info(`Logout Success userId : ${req.user.id}`);
+    this.logger.info(`Logout Success. userId : ${req.user.id}`);
   }
 
   @HttpCode(HttpStatus.OK)
   @Post('signup')
   async signUp(@Body() userDto: RegisterUserDto): Promise<void> {
-    this.logger.debug('SignUp Parameter', userDto);
+    this.logger.debug(`SignUp Parameter : ${JSON.stringify(userDto)}`);
     const user = await this.authService.signUp(userDto);
     this.authEventEmitter.emit('signup', {
       name: user.name,
       email: user.email,
       verificationToken: user.verificationToken,
     });
-    this.logger.info(`SignUp Success userId : ${user.id}`);
+    this.logger.info(`SignUp Success. userId : ${user.id}`);
   }
 
   @HttpCode(HttpStatus.OK)
   @Get('verify/:token')
-  async verify(@Param('token') token: string): Promise<void> {
-    // TODO tokenの検証処理を実装。
-    return;
+  async verifyEmail(@Param('token') token: string): Promise<void> {
+    await this.authService.verifyEmail(token);
   }
 }

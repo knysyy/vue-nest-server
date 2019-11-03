@@ -1,4 +1,4 @@
-import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
 import UsersService from '../users/users.service';
 import User from '../users/entity/users.entity';
@@ -6,25 +6,14 @@ import { JwtService } from '@nestjs/jwt';
 import RegisterUserDto from './dto/register-user.dto';
 import { Logger } from 'winston';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston/dist/winston.constants';
-import { MailerService } from '@nest-modules/mailer';
-import { InjectEventEmitter } from 'nest-emitter';
-import { AuthEventEmitter, SignupContext } from '../../events/auth.events';
 
 @Injectable()
-export default class AuthService implements OnModuleInit {
+export default class AuthService {
   constructor(
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
-    @InjectEventEmitter() private readonly emitter: AuthEventEmitter,
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-    private readonly mailerService: MailerService,
   ) {}
-
-  onModuleInit(): any {
-    this.emitter.on('signup', async (context: SignupContext) =>
-      this.sendVerificationUrl(context),
-    );
-  }
 
   async validateUserByEmailAndPass(
     email: string,
@@ -61,15 +50,7 @@ export default class AuthService implements OnModuleInit {
     return await this.usersService.register(user);
   }
 
-  async sendVerificationUrl(context: SignupContext) {
-    await this.mailerService.sendMail({
-      to: context.email,
-      subject: 'Email Verification',
-      template: 'signup',
-      context: {
-        name: context.name,
-        token: context.verificationToken,
-      },
-    });
+  async verifyEmail(token: string): Promise<void> {
+    return await this.usersService.verifyEmail(token);
   }
 }
