@@ -22,4 +22,12 @@ export default class SearchSnippetsDto {
     each: true,
   })
   readonly labelIds?: number[];
+
+  @IsOptional()
+  @IsInt()
+  readonly page: number;
+
+  @IsOptional()
+  @IsInt()
+  readonly limit: number;
 }

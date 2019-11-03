@@ -8,6 +8,8 @@ import LabelsService from '../labels/labels.service';
 import SearchSnippetsDto from './dto/search-snippets.dto';
 import FavoriteSnippetDto from './dto/favorite-snippet.dto';
 import EditSnippetDto from './dto/edit-snippet.dto';
+import { IPaginationOptions, paginate, Pagination } from 'nestjs-typeorm-paginate';
+import { paginateConstants } from '../../config/server.constatnts';
 
 @Injectable()
 export default class SnippetsService {
@@ -18,10 +20,10 @@ export default class SnippetsService {
     private readonly labelsService: LabelsService,
   ) {}
 
-  async find(
+  async paginate(
     userId: number,
     searchSnippetsDto: SearchSnippetsDto,
-  ): Promise<Snippet[]> {
+  ): Promise<Pagination<Snippet>> {
     const {
       title,
       description,
@@ -30,6 +32,18 @@ export default class SnippetsService {
       languageIds,
       labelIds,
     } = searchSnippetsDto;
+
+    let { page, limit } = searchSnippetsDto;
+    page = page ? page : paginateConstants.page;
+    limit =
+      limit && limit < paginateConstants.limit
+        ? limit
+        : paginateConstants.limit;
+    const options: IPaginationOptions = {
+      page,
+      limit,
+    };
+
     let query = this.snippetRepository
       .createQueryBuilder('snippet')
       .leftJoinAndSelect('snippet.labels', 'label')
@@ -83,7 +97,7 @@ export default class SnippetsService {
     }
 
     query.orderBy('snippet.id', 'DESC');
-    return query.getMany();
+    return paginate<Snippet>(query, options);
   }
 
   async createSnippet(

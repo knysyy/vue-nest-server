@@ -4513,6 +4513,11 @@ nest-winston@^1.1.2:
   resolved "https://registry.yarnpkg.com/nest-winston/-/nest-winston-1.1.2.tgz#5c9ad6b3b3a86f1cef501c32195164aff6ce7869"
   integrity sha512-bwobWswPrhGYenkMR8t6F/0Nfjmqez+/42391l3/xdpzAyPjUPwUKC6aJmjfqlFlK2S9zkjm/hasAPsN04R8Gg==
 
+nestjs-typeorm-paginate@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/nestjs-typeorm-paginate/-/nestjs-typeorm-paginate-1.0.2.tgz#37a302d10b0c76945fff525e1b986958e3db0a1f"
+  integrity sha512-+3OCDYaLYHAx3m7ueKUKl+kmphX02va3C3Ul6wWkK4qmg39XJhrfwCKGL1DWPsuDhpiubZWZDYPeWof69EWaiw==
+
 next-tick@1, next-tick@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
