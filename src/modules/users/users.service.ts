@@ -20,7 +20,7 @@ export default class UsersService {
       { token: user.token },
       { token: uuid4() },
     );
-    if (result.affected < 0) {
+    if (result.affected === 0) {
       throw new BadRequestException();
     }
   }
@@ -40,8 +40,7 @@ export default class UsersService {
     }
     const newUser = this.userRepository.create(reqUser);
     newUser.password = this.hashPassword(reqUser.password);
-    // TODO Tokenの生成方法を検討。
-    newUser.verificationToken = uuid4();
+    newUser.verificationToken = this.hashEmail(newUser.email);
     return this.userRepository.save(newUser);
   }
 
@@ -51,8 +50,23 @@ export default class UsersService {
     return reqUser;
   }
 
+  async verifyEmail(token: string): Promise<void> {
+    const result = await this.userRepository.update(
+      { verificationToken: token },
+      { verified: true },
+    );
+    if (result.affected === 0) {
+      throw new BadRequestException('Invalid Token.');
+    }
+  }
+
   protected hashPassword(password: string): string {
     const salt = bcrypt.genSaltSync(encryptConstants.saltRounds);
     return bcrypt.hashSync(password, salt);
+  }
+
+  protected hashEmail(email: string): string {
+    const salt = bcrypt.genSaltSync(encryptConstants.saltRounds);
+    return bcrypt.hashSync(email, salt);
   }
 }

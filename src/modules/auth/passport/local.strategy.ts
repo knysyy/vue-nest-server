@@ -18,7 +18,10 @@ export default class LocalStrategy extends PassportStrategy(Strategy) {
       password,
     );
     if (!user) {
-      throw new BadRequestException();
+      throw new BadRequestException('Email Or Password Is Wrong.');
+    }
+    if (!user.verified) {
+      throw new BadRequestException('Email Verification Is Not Complete.');
     }
     return user;
   }

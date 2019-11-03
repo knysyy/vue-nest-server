@@ -26,7 +26,6 @@ import { EventEmitter } from 'events';
     UsersModule,
     SnippetsModule,
     LanguagesModule,
-    ConfigModule,
     WinstonModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: winstonConfigFactory,
