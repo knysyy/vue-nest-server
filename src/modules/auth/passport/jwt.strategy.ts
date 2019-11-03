@@ -16,7 +16,6 @@ export default class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: PayloadInterface): Promise<User> {
-    // TODO 独自エラーをキャッチしてUnauthorizedExceptionを発生させる。
     const user = await this.authService.validateUserByToken(payload.token);
     if (!user) {
       throw new UnauthorizedException();
