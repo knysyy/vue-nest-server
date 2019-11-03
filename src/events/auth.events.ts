@@ -11,4 +11,4 @@ export interface SignupContext {
   verificationToken: string;
 }
 
-export type AuthEventEmitter = StrictEventEmitter<EventEmitter, AuthEvents>;
+export type AuthEventsEmitter = StrictEventEmitter<EventEmitter, AuthEvents>;
