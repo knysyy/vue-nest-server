@@ -5,3 +5,8 @@ export const jwtConstants = {
 export const encryptConstants = {
   saltRounds: 10,
 };
+
+export const paginateConstants = {
+  page: 1,
+  limit: 10,
+};

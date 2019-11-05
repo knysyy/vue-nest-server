@@ -22,9 +22,14 @@ export default class SnippetsController {
     @User('id') userId: number,
     @Body() searchSnippetsDto: SearchSnippetsDto,
   ): Promise<SnippetsResponse> {
-    const snippets = await this.snippetsService.find(userId, searchSnippetsDto);
+    const snippets = await this.snippetsService.paginate(
+      userId,
+      searchSnippetsDto,
+    );
+    const { items, ...rest } = snippets;
     return new SnippetsResponse(
-      snippets.map(snippet => new SnippetResponse(snippet)),
+      items.map(snippet => new SnippetResponse(snippet)),
+      rest,
     );
   }
 

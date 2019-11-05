@@ -48,6 +48,7 @@
     "morgan": "^1.9.1",
     "nest-emitter": "^1.1.0",
     "nest-winston": "^1.1.2",
+    "nestjs-typeorm-paginate": "^1.0.2",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
